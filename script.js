@@ -235,6 +235,8 @@ function startTimer() {
 
 // Collect answers
 function submitTest() {
+  console.log("submit clicked");
+
   clearInterval(timerInterval); // ⛔ stop timer safely
 
   const blanks = document.querySelectorAll(".blank");
