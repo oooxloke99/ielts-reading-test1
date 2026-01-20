@@ -180,58 +180,58 @@ document.addEventListener("click", function (e) {
    Countdown Timer
 ========================= */
 
-let timerInterval;
-let timeLeft = 25 * 60; // seconds (25 min)
-
-function startTimer() {
-  timerInterval = setInterval(() => {
-    if (timeLeft <= 0) {
-      clearInterval(timerInterval);
-      submitTest(); // auto-submit
-      return;
-    }
-
-    timeLeft--;
-    updateClock();
-  }, 1000);
-}
-
-// let totalTime = 25 * 60; // 60 minutes in seconds
-// let timerElement = document.getElementById("timer");
+// let timerInterval;
+// let timeLeft = 25 * 60; // seconds (25 min)
 
 // function startTimer() {
-//   updateTimerDisplay();
-
-//   const interval = setInterval(() => {
-//     totalTime--;
-
-//     updateTimerDisplay();
-
-//     // Turn red in last 5 minutes
-//     if (totalTime <= 300) {
-//       timerElement.classList.add("warning");
+//   timerInterval = setInterval(() => {
+//     if (timeLeft <= 0) {
+//       clearInterval(timerInterval);
+//       submitTest(); // auto-submit
+//       return;
 //     }
 
-//     if (totalTime <= 0) {
-//       clearInterval(interval);
-//       timerElement.textContent = "00:00";
-//       // Future: auto-submit here
-//     }
+//     timeLeft--;
+//     updateClock();
 //   }, 1000);
 // }
 
-// function updateTimerDisplay() {
-//   const minutes = Math.floor(totalTime / 60);
-//   const seconds = totalTime % 60;
+let totalTime = 25 * 60; // 60 minutes in seconds
+let timerElement = document.getElementById("timer");
 
-//   timerElement.textContent =
-//     String(minutes).padStart(2, "0") +
-//     ":" +
-//     String(seconds).padStart(2, "0");
-// }
+function startTimer() {
+  updateTimerDisplay();
 
-// // Start automatically
-// startTimer();
+  const interval = setInterval(() => {
+    totalTime--;
+
+    updateTimerDisplay();
+
+    // Turn red in last 5 minutes
+    if (totalTime <= 300) {
+      timerElement.classList.add("warning");
+    }
+
+    if (totalTime <= 0) {
+      clearInterval(interval);
+      timerElement.textContent = "00:00";
+      // Future: auto-submit here
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const minutes = Math.floor(totalTime / 60);
+  const seconds = totalTime % 60;
+
+  timerElement.textContent =
+    String(minutes).padStart(2, "0") +
+    ":" +
+    String(seconds).padStart(2, "0");
+}
+
+// Start automatically
+startTimer();
 
 // Collect answers
 
