@@ -43,7 +43,7 @@ body {
   font-size: 14px;
 }
 
-.blank {
+/* .blank {
   width: 30px;
   border: none;
   border-bottom: 2px solid #333;
@@ -55,7 +55,7 @@ body {
 .blank:focus {
   outline: none;
   border-bottom-color: #007bff;
-}
+} */
 
 /* Highlight tool */
 .tools {
