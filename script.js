@@ -234,53 +234,55 @@ function startTimer() {
 // startTimer();
 
 // Collect answers
-function submitTest() {
-  console.log("submit clicked");
 
-  clearInterval(timerInterval); // ⛔ stop timer safely
+// ĐM ÉO CHẠY
+// function submitTest() {
+//   // console.log("submit clicked");
 
-  const blanks = document.querySelectorAll(".blank");
-  let correct = 0;
-  const answers = {};
+//   clearInterval(timerInterval); // ⛔ stop timer safely
 
-  blanks.forEach(blank => {
-    const q = blank.dataset.q;
-    const userAnswer = blank.value.trim().toLowerCase();
-    answers[q] = userAnswer;
+//   const blanks = document.querySelectorAll(".blank");
+//   let correct = 0;
+//   const answers = {};
 
-    if (answerKey[q]?.toLowerCase() === userAnswer) {
-      correct++;
-      blank.style.borderBottomColor = "green";
-    } else {
-      blank.style.borderBottomColor = "red";
-    }
+//   blanks.forEach(blank => {
+//     const q = blank.dataset.q;
+//     const userAnswer = blank.value.trim().toLowerCase();
+//     answers[q] = userAnswer;
 
-    blank.disabled = true;
-  });
+//     if (answerKey[q]?.toLowerCase() === userAnswer) {
+//       correct++;
+//       blank.style.borderBottomColor = "green";
+//     } else {
+//       blank.style.borderBottomColor = "red";
+//     }
 
-  document.getElementById("score").textContent =
-    `Score: ${correct} / ${blanks.length}`;
+//     blank.disabled = true;
+//   });
 
-  sendToGoogle(answers, correct);
-}
+//   document.getElementById("score").textContent =
+//     `Score: ${correct} / ${blanks.length}`;
 
-document.getElementById("submitBtn").addEventListener("click", submitTest);
+//   sendToGoogle(answers, correct);
+// }
+
+// document.getElementById("submitBtn").addEventListener("click", submitTest);
 
 
-function sendToGoogle(answers, score) {
-  fetch(https://script.google.com/macros/s/AKfycbyF1naYE5EsfeYPUX41z0l2V-7SqXZhlxZyaMRUj_o-X8CNaw2o0-S8ypG5757bqbx7/exec, {
-    method: "POST",
-    mode: "no-cors",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      answers,
-      score,
-      timestamp: new Date().toISOString()
-    })
-  });
-}
+// function sendToGoogle(answers, score) {
+//   fetch(https://script.google.com/macros/s/AKfycbyF1naYE5EsfeYPUX41z0l2V-7SqXZhlxZyaMRUj_o-X8CNaw2o0-S8ypG5757bqbx7/exec, {
+//     method: "POST",
+//     mode: "no-cors",
+//     headers: {
+//       "Content-Type": "application/json"
+//     },
+//     body: JSON.stringify({
+//       answers,
+//       score,
+//       timestamp: new Date().toISOString()
+//     })
+//   });
+// }
 
 
 // function collectAnswers() {
