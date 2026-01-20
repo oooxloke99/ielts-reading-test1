@@ -109,7 +109,7 @@ document.addEventListener("click", function (e) {
    Countdown Timer
 ========================= */
 
-let totalTime = 60 * 60; // 60 minutes in seconds
+let totalTime = 1 * 60; // 60 minutes in seconds
 let timerElement = document.getElementById("timer");
 
 function startTimer() {
