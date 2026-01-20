@@ -21,8 +21,8 @@ body {
   margin: 0 4px;
   font-size: 14px;
   line-height: 1.4;
-  vertical-align: baseline;
-  text-align: center;
+  /* vertical-align: baseline;
+  text-align: center; */
 }
 
 /* Left & Right panels */
