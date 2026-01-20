@@ -43,6 +43,20 @@ body {
   font-size: 14px;
 }
 
+.blank {
+  width: 120px;
+  border: none;
+  border-bottom: 2px solid #333;
+  margin: 0 4px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.blank:focus {
+  outline: none;
+  border-bottom-color: #007bff;
+}
+
 /* Highlight tool */
 .tools {
   position: sticky;
@@ -128,3 +142,4 @@ mark.selected {
 #timer.warning {
   color: #ff4d4d;
 }
+
