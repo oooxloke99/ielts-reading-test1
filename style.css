@@ -12,7 +12,7 @@ body {
 .container {
   /* display: flex;
   height: 100vh; */
-  display: inline-block;
+  display: block;
   width: 8ch;              /* fits ~8 characters */
   max-width: 12ch;         /* never too wide */
   min-width: 4ch;          /* never too small */
@@ -21,8 +21,8 @@ body {
   margin: 0 4px;
   font-size: 14px;
   line-height: 1.4;
-  /* vertical-align: baseline;
-  text-align: center; */
+  vertical-align: baseline;
+  text-align: center;
 }
 
 /* Left & Right panels */
