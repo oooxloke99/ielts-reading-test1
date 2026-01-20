@@ -43,10 +43,17 @@ function showTooltip(mark) {
   const tooltip = document.createElement("div");
   tooltip.className = "action-tooltip";
 
+  // Show note content if exists
+  if (mark.dataset.note) {
+    const noteContent = document.createElement("div");
+    noteContent.className = "note-content";
+    noteContent.textContent = mark.dataset.note;
+    tooltip.appendChild(noteContent);
+  }
+
   const removeHighlightBtn = document.createElement("button");
   removeHighlightBtn.textContent = "Remove highlight";
   removeHighlightBtn.onclick = () => removeHighlight(mark);
-
   tooltip.appendChild(removeHighlightBtn);
 
   if (mark.dataset.note) {
@@ -58,6 +65,7 @@ function showTooltip(mark) {
 
   mark.appendChild(tooltip);
 }
+
 
 /* Remove highlight entirely */
 function removeHighlight(mark) {

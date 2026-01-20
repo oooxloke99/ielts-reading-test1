@@ -100,3 +100,11 @@ mark.selected {
 .action-tooltip button:hover {
   background-color: #f0f0f0;
 }
+
+.note-content {
+  font-size: 12px;
+  color: #333;
+  margin-bottom: 6px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #ddd;
+}
