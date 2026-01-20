@@ -8,7 +8,6 @@ function highlightText() {
   
     const range = selection.getRangeAt(0);
   
-    // Prevent highlighting outside passage
     const passage = document.querySelector(".passage");
     if (!passage.contains(range.commonAncestorContainer)) {
       alert("Please select text inside the reading passage.");
@@ -18,7 +17,14 @@ function highlightText() {
     const mark = document.createElement("mark");
     range.surroundContents(mark);
   
-    // Clear selection
     selection.removeAllRanges();
   }
+  
+  // Remove highlight when clicking on it
+  document.addEventListener("click", function (e) {
+    if (e.target.tagName === "MARK") {
+      const text = document.createTextNode(e.target.textContent);
+      e.target.parentNode.replaceChild(text, e.target);
+    }
+  });
   
