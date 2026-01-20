@@ -180,70 +180,133 @@ document.addEventListener("click", function (e) {
    Countdown Timer
 ========================= */
 
-let totalTime = 25 * 60; // 60 minutes in seconds
-let timerElement = document.getElementById("timer");
+let timerInterval;
+let timeLeft = 25 * 60; // seconds (25 min)
 
 function startTimer() {
-  updateTimerDisplay();
-
-  const interval = setInterval(() => {
-    totalTime--;
-
-    updateTimerDisplay();
-
-    // Turn red in last 5 minutes
-    if (totalTime <= 300) {
-      timerElement.classList.add("warning");
+  timerInterval = setInterval(() => {
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      submitTest(); // auto-submit
+      return;
     }
 
-    if (totalTime <= 0) {
-      clearInterval(interval);
-      timerElement.textContent = "00:00";
-      // Future: auto-submit here
-    }
+    timeLeft--;
+    updateClock();
   }, 1000);
 }
 
-function updateTimerDisplay() {
-  const minutes = Math.floor(totalTime / 60);
-  const seconds = totalTime % 60;
+// let totalTime = 25 * 60; // 60 minutes in seconds
+// let timerElement = document.getElementById("timer");
 
-  timerElement.textContent =
-    String(minutes).padStart(2, "0") +
-    ":" +
-    String(seconds).padStart(2, "0");
-}
+// function startTimer() {
+//   updateTimerDisplay();
 
-// Start automatically
-startTimer();
+//   const interval = setInterval(() => {
+//     totalTime--;
+
+//     updateTimerDisplay();
+
+//     // Turn red in last 5 minutes
+//     if (totalTime <= 300) {
+//       timerElement.classList.add("warning");
+//     }
+
+//     if (totalTime <= 0) {
+//       clearInterval(interval);
+//       timerElement.textContent = "00:00";
+//       // Future: auto-submit here
+//     }
+//   }, 1000);
+// }
+
+// function updateTimerDisplay() {
+//   const minutes = Math.floor(totalTime / 60);
+//   const seconds = totalTime % 60;
+
+//   timerElement.textContent =
+//     String(minutes).padStart(2, "0") +
+//     ":" +
+//     String(seconds).padStart(2, "0");
+// }
+
+// // Start automatically
+// startTimer();
 
 // Collect answers
-function collectAnswers() {
+function submitTest() {
+  clearInterval(timerInterval); // ⛔ stop timer safely
+
+  const blanks = document.querySelectorAll(".blank");
+  let correct = 0;
   const answers = {};
-  document.querySelectorAll(".blank").forEach(b => {
-    answers[b.dataset.q] = b.value.trim();
+
+  blanks.forEach(blank => {
+    const q = blank.dataset.q;
+    const userAnswer = blank.value.trim().toLowerCase();
+    answers[q] = userAnswer;
+
+    if (answerKey[q]?.toLowerCase() === userAnswer) {
+      correct++;
+      blank.style.borderBottomColor = "green";
+    } else {
+      blank.style.borderBottomColor = "red";
+    }
+
+    blank.disabled = true;
   });
-  return answers;
+
+  document.getElementById("score").textContent =
+    `Score: ${correct} / ${blanks.length}`;
+
+  sendToGoogle(answers, correct);
 }
 
-// Submit + send to Google Script
-document.getElementById("submitBtn").addEventListener("click", () => {
-  const answers = collectAnswers();
+document.getElementById("submitBtn").addEventListener("click", submitTest);
 
-  const payload = {
-    answers: answers,
-    score: document.getElementById("score").textContent,
-    userAgent: navigator.userAgent
-  };
 
+function sendToGoogle(answers, score) {
   fetch(https://script.google.com/macros/s/AKfycbyF1naYE5EsfeYPUX41z0l2V-7SqXZhlxZyaMRUj_o-X8CNaw2o0-S8ypG5757bqbx7/exec, {
     method: "POST",
     mode: "no-cors",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify(payload)
+    body: JSON.stringify({
+      answers,
+      score,
+      timestamp: new Date().toISOString()
+    })
   });
+}
 
-  alert("Your answers have been submitted!");
-});
+
+// function collectAnswers() {
+//   const answers = {};
+//   document.querySelectorAll(".blank").forEach(b => {
+//     answers[b.dataset.q] = b.value.trim();
+//   });
+//   return answers;
+// }
+
+// // Submit + send to Google Script
+// document.getElementById("submitBtn").addEventListener("click", () => {
+//   const answers = collectAnswers();
+
+//   const payload = {
+//     answers: answers,
+//     score: document.getElementById("score").textContent,
+//     userAgent: navigator.userAgent
+//   };
+
+//   fetch(https://script.google.com/macros/s/AKfycbyF1naYE5EsfeYPUX41z0l2V-7SqXZhlxZyaMRUj_o-X8CNaw2o0-S8ypG5757bqbx7/exec, {
+//     method: "POST",
+//     mode: "no-cors",
+//     headers: {
+//       "Content-Type": "application/json"
+//     },
+//     body: JSON.stringify(payload)
+//   });
+
+//   alert("Your answers have been submitted!");
+// });
