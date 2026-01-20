@@ -1,4 +1,45 @@
-body {
-  font-family: Arial, sans-serif;
-  padding: 40px;
+* {
+  box-sizing: border-box;
 }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  height: 100vh;
+}
+
+/* Main container */
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Left & Right panels */
+.passage,
+.questions {
+  width: 50%;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* Visual separation */
+.passage {
+  border-right: 2px solid #ddd;
+  background-color: #fafafa;
+}
+
+.questions {
+  background-color: #ffffff;
+}
+
+/* Questions styling */
+.question {
+  margin-bottom: 20px;
+}
+
+.question input {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+}
+
