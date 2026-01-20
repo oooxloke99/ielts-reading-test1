@@ -1,77 +1,97 @@
+let selectedMark = null;
+
+/* Highlight selected text */
 function highlightText() {
   const selection = window.getSelection();
-
-  if (!selection || selection.rangeCount === 0) {
-    alert("Please select text to highlight.");
-    return;
-  }
+  if (!selection || selection.rangeCount === 0) return;
 
   const range = selection.getRangeAt(0);
   const passage = document.querySelector(".passage");
 
-  if (!passage.contains(range.commonAncestorContainer)) {
-    alert("Please select text inside the reading passage.");
-    return;
-  }
+  if (!passage.contains(range.commonAncestorContainer)) return;
 
   const mark = document.createElement("mark");
-  mark.classList.add("note");
   range.surroundContents(mark);
 
   selection.removeAllRanges();
+  selectMark(mark);
 }
 
+/* Add note to selected highlight */
 function addNote() {
-  const selection = window.getSelection();
-
-  if (!selection || selection.rangeCount === 0) {
-    alert("Click on a highlighted text to add a note.");
-    return;
-  }
-
-  const node = selection.anchorNode.parentElement;
-
-  if (!node || node.tagName !== "MARK") {
-    alert("Please click on highlighted text first.");
-    return;
-  }
+  if (!selectedMark) return;
 
   const noteText = prompt("Write your note:");
-
   if (!noteText) return;
 
-  node.dataset.note = noteText;
+  selectedMark.dataset.note = noteText;
+  selectedMark.classList.add("has-note");
 }
 
-// Show note on hover
-document.addEventListener("mouseover", function (e) {
-  if (e.target.tagName === "MARK" && e.target.dataset.note) {
-    const tooltip = document.createElement("div");
-    tooltip.className = "note-tooltip";
-    tooltip.innerText = e.target.dataset.note;
+/* Select a highlight */
+function selectMark(mark) {
+  clearSelection();
+  selectedMark = mark;
+  mark.classList.add("selected");
+  showTooltip(mark);
+}
 
-    e.target.appendChild(tooltip);
+/* Show tooltip actions */
+function showTooltip(mark) {
+  removeTooltip();
+
+  const tooltip = document.createElement("div");
+  tooltip.className = "action-tooltip";
+
+  const removeHighlightBtn = document.createElement("button");
+  removeHighlightBtn.textContent = "Remove highlight";
+  removeHighlightBtn.onclick = () => removeHighlight(mark);
+
+  tooltip.appendChild(removeHighlightBtn);
+
+  if (mark.dataset.note) {
+    const removeNoteBtn = document.createElement("button");
+    removeNoteBtn.textContent = "Remove note";
+    removeNoteBtn.onclick = () => removeNote(mark);
+    tooltip.appendChild(removeNoteBtn);
   }
-});
 
-// Hide note
-document.addEventListener("mouseout", function (e) {
-  if (e.target.tagName === "MARK") {
-    const tooltip = e.target.querySelector(".note-tooltip");
-    if (tooltip) tooltip.remove();
-  }
-});
+  mark.appendChild(tooltip);
+}
 
+/* Remove highlight entirely */
+function removeHighlight(mark) {
+  const textNode = document.createTextNode(mark.firstChild.textContent);
+  mark.parentNode.replaceChild(textNode, mark);
+  clearSelection();
+}
+
+/* Remove only the note */
+function removeNote(mark) {
+  delete mark.dataset.note;
+  mark.classList.remove("has-note");
+  removeTooltip();
+}
+
+/* Clear current selection */
+function clearSelection() {
+  document.querySelectorAll("mark").forEach(m => m.classList.remove("selected"));
+  removeTooltip();
+  selectedMark = null;
+}
+
+/* Remove tooltip if exists */
+function removeTooltip() {
+  const tooltip = document.querySelector(".action-tooltip");
+  if (tooltip) tooltip.remove();
+}
+
+/* Click handling */
 document.addEventListener("click", function (e) {
   if (e.target.tagName === "MARK") {
-    if (confirm("Remove highlight and note?")) {
-
-      // Get only the original highlighted text (first text node)
-      const originalText = e.target.firstChild.textContent;
-      const textNode = document.createTextNode(originalText);
-
-      e.target.parentNode.replaceChild(textNode, e.target);
-    }
+    selectMark(e.target);
+    e.stopPropagation();
+  } else {
+    clearSelection();
   }
 });
-
