@@ -108,3 +108,23 @@ mark.selected {
   padding-bottom: 6px;
   border-bottom: 1px solid #ddd;
 }
+
+
+/* Countdown timer */
+#timer {
+  position: fixed;
+  top: 10px;
+  right: 20px;
+  background-color: #000;
+  color: #00ff99;
+  padding: 10px 14px;
+  font-size: 20px;
+  font-family: monospace;
+  border-radius: 6px;
+  z-index: 2000;
+}
+
+/* Warning when time is low */
+#timer.warning {
+  color: #ff4d4d;
+}

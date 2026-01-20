@@ -103,3 +103,45 @@ document.addEventListener("click", function (e) {
     clearSelection();
   }
 });
+
+
+/* =========================
+   Countdown Timer
+========================= */
+
+let totalTime = 60 * 60; // 60 minutes in seconds
+let timerElement = document.getElementById("timer");
+
+function startTimer() {
+  updateTimerDisplay();
+
+  const interval = setInterval(() => {
+    totalTime--;
+
+    updateTimerDisplay();
+
+    // Turn red in last 5 minutes
+    if (totalTime <= 300) {
+      timerElement.classList.add("warning");
+    }
+
+    if (totalTime <= 0) {
+      clearInterval(interval);
+      timerElement.textContent = "00:00";
+      // Future: auto-submit here
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const minutes = Math.floor(totalTime / 60);
+  const seconds = totalTime % 60;
+
+  timerElement.textContent =
+    String(minutes).padStart(2, "0") +
+    ":" +
+    String(seconds).padStart(2, "0");
+}
+
+// Start automatically
+startTimer();
