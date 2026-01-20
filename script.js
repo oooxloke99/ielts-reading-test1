@@ -62,12 +62,16 @@ document.addEventListener("mouseout", function (e) {
   }
 });
 
-// Remove highlight (click)
 document.addEventListener("click", function (e) {
   if (e.target.tagName === "MARK") {
     if (confirm("Remove highlight and note?")) {
-      const text = document.createTextNode(e.target.textContent);
-      e.target.parentNode.replaceChild(text, e.target);
+
+      // Get only the original highlighted text (first text node)
+      const originalText = e.target.firstChild.textContent;
+      const textNode = document.createTextNode(originalText);
+
+      e.target.parentNode.replaceChild(textNode, e.target);
     }
   }
 });
+
