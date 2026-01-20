@@ -180,7 +180,7 @@ document.addEventListener("click", function (e) {
    Countdown Timer
 ========================= */
 
-let totalTime = 1 * 60; // 60 minutes in seconds
+let totalTime = 25 * 60; // 60 minutes in seconds
 let timerElement = document.getElementById("timer");
 
 function startTimer() {
@@ -217,3 +217,33 @@ function updateTimerDisplay() {
 // Start automatically
 startTimer();
 
+// Collect answers
+function collectAnswers() {
+  const answers = {};
+  document.querySelectorAll(".blank").forEach(b => {
+    answers[b.dataset.q] = b.value.trim();
+  });
+  return answers;
+}
+
+// Submit + send to Google Script
+document.getElementById("submitBtn").addEventListener("click", () => {
+  const answers = collectAnswers();
+
+  const payload = {
+    answers: answers,
+    score: document.getElementById("score").textContent,
+    userAgent: navigator.userAgent
+  };
+
+  fetch(https://script.google.com/macros/s/AKfycbyF1naYE5EsfeYPUX41z0l2V-7SqXZhlxZyaMRUj_o-X8CNaw2o0-S8ypG5757bqbx7/exec, {
+    method: "POST",
+    mode: "no-cors",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(payload)
+  });
+
+  alert("Your answers have been submitted!");
+});
