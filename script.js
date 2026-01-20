@@ -104,74 +104,74 @@ document.addEventListener("click", function (e) {
   }
 });
 
-// answer key
-const answerKey = {
-  1: "D",
-  2: "G",
-  3: "B",
-  4: "C",
-  5: "B",
-  6: "D",
-  7: "E",
-  8: "B",
-  9: "C",
-  10: "A",
-  11: "jackals",
-  12: "diseases",
-  13: "food",
-  14: "foxes"
-};
+// // answer key
+// const answerKey = {
+//   1: "D",
+//   2: "G",
+//   3: "B",
+//   4: "C",
+//   5: "B",
+//   6: "D",
+//   7: "E",
+//   8: "B",
+//   9: "C",
+//   10: "A",
+//   11: "jackals",
+//   12: "diseases",
+//   13: "food",
+//   14: "foxes"
+// };
 
-// Auto-scoring using data-q
-document.getElementById("submitBtn").addEventListener("click", () => {
-  const blanks = document.querySelectorAll(".blank");
-  let correct = 0;
+// // Auto-scoring using data-q
+// document.getElementById("submitBtn").addEventListener("click", () => {
+//   const blanks = document.querySelectorAll(".blank");
+//   let correct = 0;
 
-  blanks.forEach(blank => {
-    const qNum = blank.dataset.q;   // ← HERE is data-q
-    const userAnswer = blank.value.trim().toLowerCase();
-    const correctAnswer = answerKey[qNum];
+//   blanks.forEach(blank => {
+//     const qNum = blank.dataset.q;   // ← HERE is data-q
+//     const userAnswer = blank.value.trim().toLowerCase();
+//     const correctAnswer = answerKey[qNum];
 
-    let isCorrect = false;
+//     let isCorrect = false;
 
-    if (Array.isArray(correctAnswer)) {
-      isCorrect = correctAnswer.some(
-        ans => ans.toLowerCase() === userAnswer
-      );
-    } else {
-      isCorrect = correctAnswer.toLowerCase() === userAnswer;
-    }
+//     if (Array.isArray(correctAnswer)) {
+//       isCorrect = correctAnswer.some(
+//         ans => ans.toLowerCase() === userAnswer
+//       );
+//     } else {
+//       isCorrect = correctAnswer.toLowerCase() === userAnswer;
+//     }
 
-    if (isCorrect) {
-      correct++;
-      blank.style.borderBottomColor = "green";
-    } else {
-      blank.style.borderBottomColor = "red";
-    }
+//     if (isCorrect) {
+//       correct++;
+//       blank.style.borderBottomColor = "green";
+//     } else {
+//       blank.style.borderBottomColor = "red";
+//     }
 
-    blank.disabled = true;
-  });
+//     blank.disabled = true;
+//   });
 
-  document.getElementById("score").textContent =
-    `Score: ${correct} / ${blanks.length}`;
-});
+//   document.getElementById("score").textContent =
+//     `Score: ${correct} / ${blanks.length}`;
+// });
 
-// Show correct answer after submit (optional)
-if (userAnswer !== correctAnswer) {
-  blank.title = `Correct answer: ${correctAnswer}`;
-}
+// // Show correct answer after submit (optional)
+// if (userAnswer !== correctAnswer) {
+//   blank.title = `Correct answer: ${correctAnswer}`;
+// }
 
 
-// Prevent scoring if answer missing
-if (!userAnswer) {
-  blank.style.borderBottomColor = "orange";
-  return;
-}
+// // Prevent scoring if answer missing
+// if (!userAnswer) {
+//   blank.style.borderBottomColor = "orange";
+//   return;
+// }
 
-// Show correct answer on hover (optional)
-if (!isCorrect) {
-  blank.title = "Correct: " + correctAnswer;
-}
+// // Show correct answer on hover (optional)
+// if (!isCorrect) {
+//   blank.title = "Correct: " + correctAnswer;
+// }
 
 
 
