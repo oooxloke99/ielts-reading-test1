@@ -10,8 +10,19 @@ body {
 
 /* Main container */
 .container {
-  display: flex;
-  height: 100vh;
+  /* display: flex;
+  height: 100vh; */
+  display: inline-block;
+  width: 8ch;              /* fits ~8 characters */
+  max-width: 12ch;         /* never too wide */
+  min-width: 4ch;          /* never too small */
+  border: none;
+  border-bottom: 2px solid #333;
+  margin: 0 4px;
+  font-size: 14px;
+  line-height: 1.4;
+  vertical-align: baseline;
+  text-align: center;
 }
 
 /* Left & Right panels */
